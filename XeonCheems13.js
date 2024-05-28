@@ -5696,7 +5696,7 @@ mentionedJid:[xeonshimts],
 if (!text) return replygcxeon('Where is the text?')
             let texttts = text
             const xeonrl = googleTTS.getAudioUrl(texttts, {
-                lang: "en",
+                lang: "id",
                 slow: false,
                 host: "https://translate.google.com",
             })
