@@ -1500,6 +1500,15 @@ fs.writeFileSync('./src/data/role/user.json', JSON.stringify(xeonverifieduser, n
                fs.writeFileSync('./src/data/function/badword.json', JSON.stringify(bad))
                replygcxeon('Successfully Added Bad Word!')
             break
+			case'metaai':
+var contact = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
+"contactMessage": {
+"displayName": `Lorenzo`,
+"vcard": "BEGIN:VCARD\nVERSION:3.0\nN:Lorenzo;Botz;;;\nFN:Lorenzo\nTEL;type=Mobile;waid=13135550002:+62 838-2553-6262\nEND:VCARD",
+}
+}), { userJid: m.chat, quoted: m })
+XeonBotInc.relayMessage(m.chat, contact.message, { messageId: contact.key.id })
+break
             case 'delbadword': case 'deldb':
                if (!XeonTheCreator) return XeonStickOwner()
                if (!groupAdmins) return replygcxeon(mess.admin)
