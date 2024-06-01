@@ -368,7 +368,51 @@ caption: `${dgxeon + xeontext1}`,
 }, {quoted: subscribe_dgxeon })
 }
 //end bug functions
+function msToTime(duration) {
+    const milliseconds = parseInt((duration % 1000) / 100)
+    const seconds = Math.floor((duration / 1000) % 60)
+    const minutes = Math.floor((duration / (1000 * 60)) % 60)
+    const hours = Math.floor((duration / (1000 * 60 * 60)) % 24)
 
+    return `${hours}h ${minutes}m ${seconds}s ${milliseconds}ms`
+}
+
+function formatBytes(sizeInBytes) {
+    const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+    let size = sizeInBytes, unitIndex = 0
+    while (size >= 1024 && unitIndex < units.length - 1) size /= 1024, unitIndex++
+    return size.toFixed(2) + " " + units[unitIndex]
+}
+
+async function random_mail() {
+    const link = "https://www.1secmail.com/api/v1/?action=genRandomMailbox&count=1"
+
+    try {
+        let response = await fetch(link)
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        let data = await response.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function get_mails(id, domain) {
+    const link = `https://www.1secmail.com/api/v1/?action=getMessages&login=${id}&domain=${domain}`
+
+    try {
+        let response = await fetch(link)
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        let data = await response.json()
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+		}
         //premium
         async function replyprem(teks) {
     replygcxeon(`This feature is for premium user, contact the owner to become premium user`)
@@ -1500,6 +1544,68 @@ fs.writeFileSync('./src/data/role/user.json', JSON.stringify(xeonverifieduser, n
                fs.writeFileSync('./src/data/function/badword.json', JSON.stringify(bad))
                replygcxeon('Successfully Added Bad Word!')
             break
+			case 'tempmail':
+    XeonBotInc.secmail = XeonBotInc.secmail ? XeonBotInc.secmail : {}
+    let id = "secmail"
+    let lister = ["create", "message", "delete"]
+
+    let [feature, inputs, inputs_, inputs__, inputs___] = text.split(" ")
+    if (!lister.includes(feature)) {
+        return replygcxeon("*Example:*\n" + prefix + command + " create\n\n*Pilih type yg ada*\n" + lister.map((v, index) => "  ○ " + v).join("\n"))
+    }
+
+    if (lister.includes(feature)) {
+        if (feature === "create") {
+            try {
+                let eml = await random_mail()
+                let info = eml[0].split('@')
+                XeonBotInc.secmail[id] = [
+                    await replygcxeon("*EMAIL:*\n" + eml[0] + "\n\n" + "*Login:*\n" + info[0] + "\n\n*Domain:*\n" + info[1] + "\n\n_Ketik *" + prefix + command + " message* Untuk mengecek inbox_"),
+                    eml[0],
+                    info[0],
+                    info[1]
+                ]
+            } catch (e) {
+                await replygcxeon(eror)
+            }
+        }
+
+        if (feature === "message") {
+            if (!XeonBotInc.secmail[id]) {
+                return replygcxeon("Tidak ada pesan, buat email terlebih dahulu\nKetik *" + prefix + command + " create*")
+            }
+
+            try {
+                let eml = await get_mails(XeonBotInc.secmail[id][2], XeonBotInc.secmail[id][3])
+                let teks = eml.map((v, index) => {
+                    return `*EMAIL [ ${index + 1} ]*
+*ID* : ${v.id}
+*Dari* : ${v.from}
+
+*Subjek* : ${v.subject}
+*Date* : ${v.date}
+   `.trim()
+                }).filter(v => v).join("\n\n________________________\n\n")
+                await replygcxeon(teks || "*KOSONG*" + "\n\n_Ketik *" + prefix + command + " delete* Untuk menghapus email_")
+            } catch (e) {
+                await replygcxeon(eror)
+            }
+        }
+
+        if (feature === "delete") {
+            if (!XeonBotInc.secmail[id]) {
+                return replygcxeon("Tidak ada email yang terpakai")
+            }
+
+            try {
+                delete XeonBotInc.secmail[id]
+                await replygcxeon("Sukses menghapus email")
+            } catch (e) {
+                await replygcxeon(eror)
+            }
+        }
+    }
+    break
 			case'metaai':
 var contact = generateWAMessageFromContent(m.chat, proto.Message.fromObject({
 "contactMessage": {
