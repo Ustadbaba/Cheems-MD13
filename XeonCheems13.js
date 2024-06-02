@@ -1544,25 +1544,34 @@ fs.writeFileSync('./src/data/role/user.json', JSON.stringify(xeonverifieduser, n
                fs.writeFileSync('./src/data/function/badword.json', JSON.stringify(bad))
                replygcxeon('Successfully Added Bad Word!')
             break
-		case 'honkai-profile': {
-  if (args.length == 0) return replygcxeon(`Penggunaan:\n${prefix + command} <UID>\n\nContoh:\n${prefix + command} 808187628`)
-
-  axios.get(`https://enka.network/api/hsr/uid/${args[0]}?info`)
-    .then(({ data }) => {
-      var profileMessage = `▧「 *Info Profil Honkai SR* 」\n\n`
-      profileMessage += `*Nickname* : *${data.player.nickname || 'Tidak ditemukan'}*\n`
-      profileMessage += `*Trailblaze Level* : *${data.player.level || 'Tidak ditemukan'}*\n`
-      profileMessage += `*Signature* : *${data.player.signature || 'Tidak ditemukan'}*\n`
-      profileMessage += `*Equilibrium Level* : *${data.player.world_level || 'Tidak ditemukan'}*\n\n`
-      profileMessage += `*Achievement* : *${data.player.space_info.achievement_count || 'Tidak ditemukan'}*\n`
-      profileMessage += `*Memory of Chaos* : *Level ${data.player.space_info.memory_data.level || 'Tidak ditemukan'}*\n`
-      profileMessage += `*Simulated Universe* : *Level ${data.player.space_info.universe_level || 'Tidak ditemukan'}*\n\n`
-      profileMessage += `▧ *Mau Lebih Lengkap? Cek Disini :*\nhttps://enka.network/hsr/${args[0]}\n`
-      replygcxeon(profileMessage)
-    })
-    .catch(console.error)
+		case 'mc':
+            if (args.length == 0) return replygcxeon(`*List Server:*\n\n> java\n> bedrock`)
+            if (args[0] === 'bedrock') {
+axios.get(`https://api.mcstatus.io/v2/status/bedrock/${args[1]}`).then(({ data }) => {
+				var caption = `▧「 *S E R V E R  M I N E C R A F T* 」\n\n`
+				caption += ` ‣ *IP* : *${data.host}*\n`
+				caption += ` ‣ *PORT* : *${data.port}*\n`
+				caption += ` ‣ *IP Address* : *${data.ip_address}*\n\n`
+				caption += ` ‣ *Players* : *${data.players.online}/${data.players.max}*\n`
+				caption += ` ‣ *Version* : *${data.version.name}*\n\n`
+				caption += `▧ *Beli Hosting? Di Owner Aja 😋*\n`
+				XeonBotInc.sendMessage(from , {image: { url: `https://telegra.ph/file/0d4c6b5fab8220394750c.jpg` }, caption: caption },{ quoted: m })
+			})
+} else if (args[0] === 'java') {
+axios.get(`https://api.mcstatus.io/v2/status/java/${args[1]}`).then(({ data }) => {
+				var caption = `▧「 *S E R V E R  M I N E C R A F T* 」\n\n`
+				caption += ` ‣ *IP* : *${data.host}*\n`
+				caption += ` ‣ *PORT* : *${data.port}*\n`
+				caption += ` ‣ *IP Address* : *${data.ip_address}*\n\n`
+				caption += ` ‣ *Players* : *${data.players.online}/${data.players.max}*\n`
+				caption += ` ‣ *Version* : *${data.version.name_clean}*\n\n`
+				caption += `▧ *Beli Hosting? Di Owner Aja 😋*\n`
+				XeonBotInc.sendMessage(from , {image: { url: `https://telegra.ph/file/0d4c6b5fab8220394750c.jpg` }, caption: caption },{ quoted: m })
+			})
+} else {
+replygcxeon('error')
 }
-break
+			break
 			case 'tempmail':
     XeonBotInc.secmail = XeonBotInc.secmail ? XeonBotInc.secmail : {}
     let id = "secmail"
