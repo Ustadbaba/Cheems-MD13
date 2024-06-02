@@ -1544,6 +1544,25 @@ fs.writeFileSync('./src/data/role/user.json', JSON.stringify(xeonverifieduser, n
                fs.writeFileSync('./src/data/function/badword.json', JSON.stringify(bad))
                replygcxeon('Successfully Added Bad Word!')
             break
+			case 'honkai-profile': {
+  if (args.length == 0) return replygcxeon(`Penggunaan:\n${prefix + command} <UID>\n\nContoh:\n${prefix + command} 808187628`)
+
+  axios.get(`https://enka.network/api/hsr/uid/${args[0]}?info`)
+    .then(({ data }) => {
+      var profileMessage = `▧「 *Info Profil Honkai SR* 」\n\n`
+      profileMessage += `*Nickname* : *${data.playerInfo.nickname || 'Tidak ditemukan'}*\n`
+      profileMessage += `*Trailblaze Level* : *${data.playerInfo.level || 'Tidak ditemukan'}*\n`
+      profileMessage += `*Signature* : *${data.playerInfo.signature || 'Tidak ditemukan'}*\n`
+      profileMessage += `*Equilibrium Level* : *${data.playerInfo.worldLevel || 'Tidak ditemukan'}*\n\n`
+      profileMessage += `*Achievement* : *${data.playerInfo.finishAchievementNum || 'Tidak ditemukan'}*\n`
+      profileMessage += `*Memory of Chaos* : *Level ${data.playerInfo.memoryData.level || 'Tidak ditemukan'}*\n`
+      profileMessage += `*Simulated Universe* : *Level ${data.playerInfo.universeLevel || 'Tidak ditemukan'}*\n\n`
+      profileMessage += `▧ *Mau Lebih Lengkap? Cek Disini :*\nhttps://enka.network/hsr/${args[0]}\n`
+      replygcxeon(profileMessage)
+    })
+    .catch(console.error)
+}
+break
 			case 'tempmail':
     XeonBotInc.secmail = XeonBotInc.secmail ? XeonBotInc.secmail : {}
     let id = "secmail"
