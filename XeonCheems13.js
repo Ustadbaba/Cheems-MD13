@@ -1545,9 +1545,9 @@ fs.writeFileSync('./src/data/role/user.json', JSON.stringify(xeonverifieduser, n
                replygcxeon('Successfully Added Bad Word!')
             break
 		case 'pinbutton': {
+  if (!text) return replycase 'pinbutton': {
   if (!text) return replygcxeon(`Enter Query`);
-  //try {
-  await m.replygcxeon(mess.wait);
+  //try   
 
   async function createImage(url) {
     const { imageMessage } = await generateWAMessageContent({
