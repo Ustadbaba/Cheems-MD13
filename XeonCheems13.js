@@ -1553,10 +1553,10 @@ fs.writeFileSync('./src/data/role/user.json', JSON.stringify(xeonverifieduser, n
       profileMessage += `*Nickname* : *${data.player.nickname || 'Tidak ditemukan'}*\n`
       profileMessage += `*Trailblaze Level* : *${data.player.level || 'Tidak ditemukan'}*\n`
       profileMessage += `*Signature* : *${data.player.signature || 'Tidak ditemukan'}*\n`
-      profileMessage += `*Equilibrium Level* : *${data.player.worldLevel || 'Tidak ditemukan'}*\n\n`
-      profileMessage += `*Achievement* : *${data.player.finishAchievementNum || 'Tidak ditemukan'}*\n`
-      profileMessage += `*Memory of Chaos* : *Level ${data.player.memoryData.level || 'Tidak ditemukan'}*\n`
-      profileMessage += `*Simulated Universe* : *Level ${data.player.universeLevel || 'Tidak ditemukan'}*\n\n`
+      profileMessage += `*Equilibrium Level* : *${data.player.world_level || 'Tidak ditemukan'}*\n\n`
+      profileMessage += `*Achievement* : *${data.player.space_info.achievement_count || 'Tidak ditemukan'}*\n`
+      profileMessage += `*Memory of Chaos* : *Level ${data.player.space_info.memory_data.level || 'Tidak ditemukan'}*\n`
+      profileMessage += `*Simulated Universe* : *Level ${data.player.space_info.universe_level || 'Tidak ditemukan'}*\n\n`
       profileMessage += `▧ *Mau Lebih Lengkap? Cek Disini :*\nhttps://enka.network/hsr/${args[0]}\n`
       replygcxeon(profileMessage)
     })
