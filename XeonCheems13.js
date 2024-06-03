@@ -1544,6 +1544,38 @@ fs.writeFileSync('./src/data/role/user.json', JSON.stringify(xeonverifieduser, n
                fs.writeFileSync('./src/data/function/badword.json', JSON.stringify(bad))
                replygcxeon('Successfully Added Bad Word!')
             break
+		case 'telegram':
+  if (!text) return replygcxeon('Masukkan tag/username telegram dan pesan yang ingin Anda kirim, contoh: .telegram (username)|pesan')
+  
+  const token = '7165128145:AAHvaUAaH1eth-Q-zcYaFWABwWESPng1e64'
+  const [chatId, message] = text.split('|')
+
+  if (!chatId || !message) return replygcxeon('Format salah. Pastikan menggunakan format: .telegram (username)|pesan')
+
+  const apiUrl = `https://api.telegram.org/bot${token}/sendMessage`
+
+  fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      chat_id: chatId.trim(),
+      text: message.trim()
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.ok) {
+      replygcxeon('Pesan berhasil dikirim melalui Telegram')
+    } else {
+      replygcxeon(`Gagal mengirim pesan: ${data.description}`)
+    }
+  })
+  .catch(error => {
+    replygcxeon(`Terjadi kesalahan: ${error.message}`)
+  })
+  break
 		case 'mc':
             if (args.length == 0) return replygcxeon(`*List Server:*\n\n> java\n> bedrock`)
             if (args[0] === 'bedrock') {
