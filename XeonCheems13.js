@@ -1544,26 +1544,7 @@ fs.writeFileSync('./src/data/role/user.json', JSON.stringify(xeonverifieduser, n
                fs.writeFileSync('./src/data/function/badword.json', JSON.stringify(bad))
                replygcxeon('Successfully Added Bad Word!')
             break
-		case 'telegram':
-  if (!text) return replcase 'telegram':
-if (!text) return replygcxeon('masukan tag/username telegram lu')
-const token = '7140619368:AAF4ebl9DW_50f9ASBbzOiRJ-5LUS5RUA8U';
-const chatId = text;
-const message = 'Hello from your Telegram bot!';
-
-const apiUrl = `https://api.telegram.org/bot${token}/sendMessage`;
-
-fetch(apiUrl, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    chat_id: chatId,
-    text: message,
-  }),
-})
-break
+		
 		case 'mc':
             if (args.length == 0) return replygcxeon(`*List Server:*\n\n> java\n> bedrock`)
             if (args[0] === 'bedrock') {
