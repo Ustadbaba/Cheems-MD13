@@ -1545,37 +1545,25 @@ fs.writeFileSync('./src/data/role/user.json', JSON.stringify(xeonverifieduser, n
                replygcxeon('Successfully Added Bad Word!')
             break
 		case 'telegram':
-  if (!text) return replygcxeon('Masukkan tag/username telegram dan pesan yang ingin Anda kirim, contoh: .telegram (username)|pesan')
-  
-  const token = '7165128145:AAHvaUAaH1eth-Q-zcYaFWABwWESPng1e64'
-  const [chatId, message] = text.split('|')
+  if (!text) return replcase 'telegram':
+if (!text) return replygcxeon('masukan tag/username telegram lu')
+const token = '7140619368:AAF4ebl9DW_50f9ASBbzOiRJ-5LUS5RUA8U';
+const chatId = text;
+const message = 'Hello from your Telegram bot!';
 
-  if (!chatId || !message) return replygcxeon('Format salah. Pastikan menggunakan format: .telegram (username)|pesan')
+const apiUrl = `https://api.telegram.org/bot${token}/sendMessage`;
 
-  const apiUrl = `https://api.telegram.org/bot${token}/sendMessage`
-
-  fetch(apiUrl, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      chat_id: chatId.trim(),
-      text: message.trim()
-    })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.ok) {
-      replygcxeon('Pesan berhasil dikirim melalui Telegram')
-    } else {
-      replygcxeon(`Gagal mengirim pesan: ${data.description}`)
-    }
-  })
-  .catch(error => {
-    replygcxeon(`Terjadi kesalahan: ${error.message}`)
-  })
-  break
+fetch(apiUrl, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    chat_id: chatId,
+    text: message,
+  }),
+})
+break
 		case 'mc':
             if (args.length == 0) return replygcxeon(`*List Server:*\n\n> java\n> bedrock`)
             if (args[0] === 'bedrock') {
